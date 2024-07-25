@@ -34,6 +34,11 @@ export const ThemeModify:any = {
         lineHeight: 'normal',
         fontWeight: '500',
       },
+      h5: {
+        fontSize: '16px',
+        lineHeight: 'normal',
+        fontWeight: '500',
+      },
     }
   },
   globalStyles: (theme:any) => ({

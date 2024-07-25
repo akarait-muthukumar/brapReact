@@ -1,0 +1,39 @@
+.panel{
+    display: flex;
+    height: 100vh;
+
+    .sidebar{
+        position: fixed;
+        top:0;
+        left: 0;
+        width: 270px;
+        height: 100vh;
+        background-color: white;
+        transition: all ease .5s;
+        border-right: 1px solid var(--mantine-color-dark-0);
+        overflow: hidden auto;
+    } 
+
+    .panel-container{
+        width: calc(100% - 270px);
+        margin-left: 270px;
+        height: 100%;
+        transition: all ease .5s;
+    }
+
+    header{
+        height: 56px;
+        border-bottom: 1px solid var(--mantine-color-dark-0);
+    }
+    
+    // If fold the sidebar
+    .active{
+        .sidebar{
+            width: 70px;
+        }
+        .panel-container{
+            width: calc(100% - 70px);
+        }
+    }
+
+}
