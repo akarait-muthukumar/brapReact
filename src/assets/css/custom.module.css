@@ -1,0 +1,25 @@
+.mantine-Button-section{
+    padding:8px 6px;
+    background-color: #0003;
+    margin-inline-end: 0;
+    height: 100%;
+}
+.mantine-Button-label{
+    padding:4px 8px;
+    font-size: 13px;
+    font-weight: 400;
+    line-height:normal;
+  }
+.mantine-Button-root{
+    border: 0;
+    padding: 0;
+    text-transform: capitalize;
+}
+.mantine-Input-input{
+    height: 32px;
+    min-height: 32px;
+    padding: 0 8px;
+}
+.mantine-Input-input > input{
+    padding-inline-start: inherit;
+}
