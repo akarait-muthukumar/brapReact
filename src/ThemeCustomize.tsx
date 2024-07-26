@@ -1,12 +1,17 @@
 
-import {Button, TextInput} from '@mantine/core';
+import {Button, TextInput, NavLink, Paper, Select} from '@mantine/core';
 import customCss from './assets/css/custom.module.css'
 
 // customize theme
 export const ThemeModify:any = { 
   fontFamily: 'Roboto, sans-serif',
+  focusRing:'never',
   primaryColor:'blue',
   primaryShade: 8,
+  scale:1,
+  colors:{
+    'blue':["#eef0fe","#dae6f5","#b3cae7", "#89adda", "#6694cf", "#5084c9", "#447cc7", "#346ab1", "#2b5e9f", "#1b518d"]
+  },
   components:{
     Button:Button.extend({
       classNames: {
@@ -19,11 +24,57 @@ export const ThemeModify:any = {
       classNames: {
         input:customCss['mantine-Input-input'],
       },
-    })
+    }),
+    NavLink:NavLink.extend({
+      styles: (theme) => ({
+        root: {
+          "--nl-bg":theme.colors[theme.primaryColor][0],
+          "--nl-hover":theme.colors[theme.primaryColor][0],
+        },
+      }),
+      classNames:{
+        root:customCss['mantine-NavLink-root'],
+        label:customCss['mantine-NavLink-label'],
+        section:customCss['mantine-NavLink-section']
+      }
+    }),
+    Paper:Paper.extend({
+      defaultProps:{
+        shadow:"0 0.125rem 0.25rem rgba(0, 0, 0, 0.075)",
+        p:"8px",
+        radius:0
+      }
+    }),
+    Select:Select.extend({
+      defaultProps:{
+        withCheckIcon:false,
+        rightSection:<i className="fa-sharp fa-solid fa-caret-down"></i>,
+        rightSectionWidth:24,
+        maxDropdownHeight:200,
+        comboboxProps:{
+          dropdownPadding: 0
+        }
+      },
+      classNames:{
+        option:customCss['mantine-Select-option'],
+        section:customCss['mantine-Select-section'],
+        input:customCss['mantine-Select-input'],
+      }
+    }),
   },
   activeClassName:'',
   headings: {
     sizes: {
+      h1: {
+        fontSize: '40px',
+        lineHeight: 'normal',
+        fontWeight: '500',
+      },
+      h2: {
+        fontSize: '32px',
+        lineHeight: 'normal',
+        fontWeight: '500',
+      },
       h3: {
         fontSize: '24px',
         lineHeight: 'normal',
@@ -39,61 +90,13 @@ export const ThemeModify:any = {
         lineHeight: 'normal',
         fontWeight: '500',
       },
+      h6: {
+        fontSize: '14px',
+        lineHeight: 'normal',
+        fontWeight: '500',
+      },
     }
   },
-  globalStyles: (theme:any) => ({
-    body: {
-      ...theme.fn.fontStyles(),
-      lineHeight:'normal'
-    },
-    '.nav-link.active':{
-        background: theme.colors[theme.primaryColor][0],
-        color:theme.colors[theme.primaryColor][9],
-    },
-    '.nav-link:hover':{
-        color:theme.colors[theme.primaryColor][9],
-    },
-    '.mantine-Drawer-header, ::selection, .alertBtn' :{
-      background: theme.colors[theme.primaryColor][9],
-      color: 'white'
-    },
-    '.mantine-Table-root > thead' : {
-        position:'sticky',
-        top:0,
-        zIndex:1,
-    },
-    '.mantine-Table-root > thead > tr > th':{
-       color:'white',
-       background: theme.colors[theme.primaryColor][9],
-       border:'none !important',
-       whiteSpace:'nowrap'
-    },
-    '.mantine-Table-root > tbody > tr:last-child':{
-        borderBottom:'0.0625rem solid #dee2e6'
-    },
-    '.mantine-Accordion-label':{
-        padding:'8px 0',
-        fontSize:'14px',
-        fontWeight:500,
-        letterSpacing:'0.3px',
-    },
-    '.mantine-Accordion-control':{
-        padding:'0 8px',
-    },
-    '.mantine-ScrollArea-thumb':{
-      backgroundColor:'#0002'
-    },
-    '.mantine-Text-root':{
-      lineHeight: 'normal'
-    },
-    '.mantine-InputWrapper-label':{
-      fontSize:'14px',
-      marginBottom:'6px',
-      letterSpacing:'normal',
-      lineHeight:'1.55',
-      textTransform:'capitalize'
-    },
-  }),
   spacing:{
     xl: "32px", lg: "24px", md: "16px", sm: "8px", xs: "4px"
   },
@@ -104,4 +107,11 @@ export const ThemeModify:any = {
     lg: '74em',
     xl: '90em',
   },
+  fontSize:{
+    xs: '12px',
+    sm: '14px',
+    md: '16px',
+    lg: '20px',
+    xl: '24px',
+  }
 };

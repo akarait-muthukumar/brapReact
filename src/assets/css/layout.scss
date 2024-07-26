@@ -10,7 +10,7 @@
         height: 100vh;
         background-color: white;
         transition: all ease .5s;
-        border-right: 1px solid var(--mantine-color-dark-0);
+        border-right: 1px solid var(--mantine-color-gray-3);
         overflow: hidden auto;
     } 
 
@@ -23,7 +23,7 @@
 
     header{
         height: 56px;
-        border-bottom: 1px solid var(--mantine-color-dark-0);
+        border-bottom: 1px solid var(--mantine-color-gray-3);
     }
     
     // If fold the sidebar

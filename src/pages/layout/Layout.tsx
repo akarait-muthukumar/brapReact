@@ -9,9 +9,9 @@ function Layout() {
     <>
         <Box className="panel">
             <SideBar/>
-            <Box className="panel-container">
+            <Box className="panel-container" bg='gray.0'>
                 <Titlebar/>
-                <Box component="main">
+                <Box component="main" p={8}>
                     <Outlet/>
                 </Box>
             </Box>

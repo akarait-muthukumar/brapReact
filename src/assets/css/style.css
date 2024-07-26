@@ -114,3 +114,7 @@ body {
   font-size: 13px;
   font-weight: normal !important;
 }
+
+input:focus , input:focus-within{
+  border-color: var(--mantine-color-gray-4);
+}
