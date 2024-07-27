@@ -18,6 +18,9 @@ import Survey from './pages/survey/Survey';
 import SurveyYear from './pages/surveyYear/SurveyYear';
 import UserRemarks from './pages/userRemarks/UserRemarks';
 
+// context
+import LayoutContext from './contextapi/LayoutContext';
+
 type navType = RouteObject & { m_user_type_id: Number[] }
 
 const navs: navType[] = [
@@ -120,7 +123,7 @@ export const Router = createBrowserRouter([
     },
     {
         path: '/',
-        element: <Layout />,
+        element:<LayoutContext><Layout/></LayoutContext>,
         children: [...navlinks]
     },
 ]);

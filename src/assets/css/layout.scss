@@ -27,12 +27,16 @@
     }
     
     // If fold the sidebar
-    .active{
+    &.active{
         .sidebar{
             width: 70px;
+            .mantine-NavLink-label{
+               display: none;
+            }
         }
         .panel-container{
             width: calc(100% - 70px);
+            margin-left: 70px;
         }
     }
 

@@ -1,4 +1,4 @@
-import {stateType , actionType} from "../../types/layout/Layout";
+import {stateType , actionType} from "../types/Layout";
 
 export default function LayoutReducer(state:stateType, action:actionType):stateType{
     switch(action.type){

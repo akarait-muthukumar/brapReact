@@ -24,6 +24,10 @@ export const ThemeModify:any = {
       classNames: {
         input:customCss['mantine-Input-input'],
       },
+      defaultProps:{
+        size:"sm",
+        placeholder:"Enter"
+      }
     }),
     NavLink:NavLink.extend({
       styles: (theme) => ({

@@ -1,8 +1,12 @@
 import { Flex, Title,Box, UnstyledButton, Popover , Text, Avatar, NavLink} from "@mantine/core"
 import { useNavigate, To} from "react-router-dom";
 
+import {useLayout} from "../../contextapi/LayoutContext";
+
 function Titlebar() {
   const navigate = useNavigate();
+
+  const {state, dispatch} = useLayout();
 
   const redirectTo = (to:To) =>{
     navigate(to);
@@ -11,10 +15,9 @@ function Titlebar() {
   const logout = () =>{
   }
 
-
   return (
     <Flex component="header" justify='space-between' align='center' px='sm' py='xs'>
-      <UnstyledButton><i className="fa fa-bars"></i></UnstyledButton>
+      <UnstyledButton onClick={()=>{dispatch({type:'panelActive',payload:!state.panelActive})}}><i className="fa fa-bars"></i></UnstyledButton>
       <Title order={5}>Business Reforms Action Plan 2024 - Customer Experience Transformation</Title>
       <Popover>
         <Popover.Target>

@@ -1,7 +1,7 @@
 
 import {createContext, useContext, PropsWithChildren, useReducer} from 'react'
-import type { stateType, ContextType} from '../../types/layout/Layout';
-import LayoutReducer from '../../reducers/layout/LayoutReducer';
+import type { stateType, ContextType} from '../types/Layout';
+import LayoutReducer from '../reducers/LayoutReducer';
 
 const initialState:stateType= {
    panelActive : false
@@ -13,8 +13,8 @@ export default function LayoutContext({children}:PropsWithChildren){
 
    const [state, dispatch] = useReducer(LayoutReducer, initialState);
 
-   return <Context.Provider value={{state,dispatch}}></Context.Provider>
+   return <Context.Provider value={{state,dispatch}}>{children}</Context.Provider>
 
 }
 
-export const useLayout = () =>useContext(Context);
+export const useLayout = () => useContext(Context);

@@ -1,13 +1,18 @@
 import { Box , Flex, Image, NavLink, Text} from "@mantine/core"
 import { useNavigate, To} from "react-router-dom";
 import { useState, Fragment} from "react";
-import type { navsType } from "../../types/layout/Sidebar";
+import type { navsType } from "../../types/Sidebar";
 // import TN_Gov  from "../../assets/images/TN_Gov.png";
 import guidance_TN_gov  from "../../assets/images/guidance_TN_gov.png";
 
+import { useLayout } from "../../contextapi/LayoutContext";
+
 function SideBar() {
   const navigate = useNavigate();
-  const [active, setActive] = useState<Number>(0);
+  
+  const {state} = useLayout();
+
+  const [active, setActive] = useState<Number>(1);
 
   const navs:navsType[] = [
     {
@@ -162,7 +167,7 @@ function SideBar() {
             
             <Fragment key={index}>
 
-             {parent.text != null && <Text ps={8} my={8} size="xs" fw={500}  c='gray.6' tt="uppercase">{parent.text}</Text>} 
+             {parent.text != null && <Text ps={8} my={8} size="xs" fw={500}  c='gray.6' tt="uppercase">{state.panelActive ? <Box my={8} style={{borderTop:'.5px solid #dee2e6'}} /> : parent.text}</Text>} 
               <Box>
               {
                 parent.children.map((item, key)=>{
