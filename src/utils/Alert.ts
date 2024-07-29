@@ -1,22 +1,14 @@
 import Swal from 'sweetalert2';
 
 class Alert {
-    error = async (values:string)=>{
+    error = async (values:string, showConfirmBtn:boolean = false)=>{
         return Swal.fire({
             icon:'error',
             title: values,
             allowOutsideClick:false,
             allowEscapeKey:false,
-        }).then((result)=>{
-            if(result.isConfirmed){
-                if(values === 'Token has expired'){
-                    return 'signOut'
-                }
-                else{
-                    return true
-                }
-            }
-
+            showConfirmButton: showConfirmBtn,
+            timer: showConfirmBtn ? undefined : 1500
         })
     }
     success = async (values:string)=>{
@@ -25,10 +17,8 @@ class Alert {
             title: values,
             allowOutsideClick:false,
             allowEscapeKey:false,
-        }).then((result)=>{
-            if(result.isConfirmed){
-                return true
-            }
+            showConfirmButton: false,
+            timer: 1500
         })
     }
     question = async (values:string)=>{
@@ -38,13 +28,6 @@ class Alert {
             allowOutsideClick:false,
             allowEscapeKey:false,
             showCancelButton:true,
-        }).then((result)=>{
-            if(result.isConfirmed){
-                return true
-            }
-            if(result.isDismissed){
-                return false
-            }
         })
     }
 }

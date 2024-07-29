@@ -4,6 +4,7 @@ import { useForm , isNotEmpty } from '@mantine/form';
 import { api } from '../../utils/ApiService';
 import { formType } from '../../types/Login';
 import { alert } from '../../utils/Alert';
+import { instance } from '../../utils/ApiService';
 
 function LoginForm() {
 
@@ -32,10 +33,12 @@ function LoginForm() {
           alert.error("already_login");
         }
         else{
-          alert.error(res.data.already_login).then(()=>{
+          alert.success(res.message).then(()=>{
+            instance.defaults.headers['X-eodb-Authorization'] = res.data.token;
+         
             sessionStorage.setItem("details", btoa(JSON.stringify(res.data.details)));
             sessionStorage.setItem("token", res.data.token);
-            navigate('/dashboard', {replace:true});
+            navigate('/', {replace:true});
           });
         }
     }

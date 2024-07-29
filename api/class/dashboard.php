@@ -15,7 +15,7 @@ class Dashboard {
         INNER JOIN m_department md ON md.department_code = dw.DeptID AND md.m_parent_department_id IS NULL 
         WHERE m_year = {$_POST['year']}  AND dw.is_deleted = 0";
 
-        return $this->db->getAll($sql);
+        return $this->db->getRow($sql);
     }
 
     public function getCompletedSurveyCount() {
@@ -24,7 +24,7 @@ class Dashboard {
         INNER JOIN departmentwisereformid dwf ON dwf.department_id = fcd.department_id AND dwf.is_deleted = 0
         WHERE fcd.deleted = 0 AND fcd.survey_comp_status = 'Completed' AND fcd.Survey_Year = {$_POST['year']}";
         
-        return $this->db->getAll($sql);
+        return $this->db->getRow($sql);
     }
 
     public function round_values($value) {
@@ -184,10 +184,10 @@ class Dashboard {
                                 
             
     
-            return array('data' => $department_array, 'overall_rating' => $overall_rating);
+            return array('list' => $department_array, 'overall_rating' => $overall_rating);
         }
         else{
-            return array('data' => array(), 'overall_rating' => 0);
+            return array('list' => array(), 'overall_rating' => 0);
         }
        
     }

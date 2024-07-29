@@ -1,20 +1,36 @@
 import axios from "axios";
+import { alert } from "./Alert";
 
-let URL = "http://192.168.0.116/brapre/api/ajax.php";
+export const instance = axios.create({
+    baseURL: 'http://192.168.0.116/brapre/api/ajax.php',
+    headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        "X-eodb-Authorization":sessionStorage.getItem("token") == null ? "" : sessionStorage.getItem("token")
+    }
+});
 
 class ApiService{
 
     async fetch(payload:any){
 
-        try{
-            let response =  await axios.post(URL, payload, {
-                headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-                }
-            });
+        let details = sessionStorage.getItem('details');
+        if(details){
+            payload = {...payload, "userDetails":details};
+        }
 
+        try{
+            let response =  await instance.post('',payload);
             if(response.data.error_code === 200){
                 return response.data;
+            }
+            else if(response.data.error_code === 440){
+                await alert.error('Token Expired', true).then((res)=>{
+                    if(res.isConfirmed){
+                        sessionStorage.clear();
+                        instance.defaults.headers['X-eodb-Authorization'] = null;
+                        window.location.replace(`${window.location.origin}/login`);
+                    }
+                });
             }
             else{
                 throw new Error(response.data.message)

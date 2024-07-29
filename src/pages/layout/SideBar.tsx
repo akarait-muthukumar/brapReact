@@ -167,7 +167,7 @@ function SideBar() {
             
             <Fragment key={index}>
 
-             {parent.text != null && <Text ps={8} my={8} size="xs" fw={500}  c='gray.6' tt="uppercase">{state.panelActive ? <Box my={8} style={{borderTop:'.5px solid #dee2e6'}} /> : parent.text}</Text>} 
+             {parent.text != null && <Text ps={8} my={8} size="xs" fw={500}  c='gray.6' tt="uppercase">{state.panelActive ? <Box component="span" display='block' my={8} style={{borderTop:'.5px solid #dee2e6'}} /> : parent.text}</Text>} 
               <Box>
               {
                 parent.children.map((item, key)=>{

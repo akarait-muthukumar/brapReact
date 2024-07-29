@@ -106,13 +106,13 @@
         }
 
         public function getYear(){
-            $sql = "SELECT m_year as id , m_year as text, is_status as selected FROM m_year  WHERE is_deleted = 0 ORDER BY m_year_id DESC"; 
+            $sql = "SELECT m_year as `value` , m_year as label , is_status as selected FROM m_year  WHERE is_deleted = 0 ORDER BY m_year_id DESC"; 
             $rs = $this->db->getAll($sql);
 
             $result = array();
             foreach($rs as $key => $val){
-                $result[$key]['id'] = $val['id'];
-                $result[$key]['text'] = $val['text'];
+                $result[$key]['value'] = $val['value'];
+                $result[$key]['label'] = $val['label'];
                if($val['selected'] == 1){
                 $result[$key]['selected'] = true;
                }
