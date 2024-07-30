@@ -17,6 +17,7 @@ import Service from './pages/service/Service';
 import Survey from './pages/survey/Survey';
 import SurveyYear from './pages/surveyYear/SurveyYear';
 import UserRemarks from './pages/userRemarks/UserRemarks';
+import DashboardView from './pages/dashboard/DashboardView';
 
 // context
 import LayoutContext from './contextapi/LayoutContext';
@@ -27,6 +28,11 @@ const navs: navType[] = [
     {
         path: '/',
         element: <Dashboard />,
+        m_user_type_id: [10000, 1000, 100]
+    },
+    {
+        path: '/dashboardView',
+        element: <DashboardView/>,
         m_user_type_id: [10000, 1000, 100]
     },
     {

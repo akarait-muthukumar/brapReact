@@ -128,14 +128,12 @@ td {
   font-size: 13px;
 }
 .progress {
-  width: 160px;
   margin: auto;
   height: 14px;
   display: flex;
   overflow: hidden;
   font-size: 0.75rem;
-  background-color: var(--mantine-color-gray-2);
-  border-radius: 0.25rem;
+  border-radius: 14px;
   position: relative;
 }
 
@@ -156,4 +154,11 @@ td {
   font-size: 10px;
   line-height: 14px;
   border-radius: 14px;
+}
+
+.group-row{
+  visibility: collapse;
+}
+.group-row.active{
+  visibility: visible;
 }

@@ -1,24 +1,27 @@
 import { Paper, Grid, Text, Box, Select, useMantineTheme, ComboboxData, Table, ScrollArea, UnstyledButton, Flex } from "@mantine/core"
-import { useState, useEffect, useRef, useLayoutEffect} from "react";
+import { useState, useEffect, useRef, useLayoutEffect, Fragment } from "react";
 import GaugeChart from "./GaugeChart";
 import type { filterType, dataType } from "../../types/Dashboard";
 import { api } from "../../utils/ApiService";
 import CountCard from "../../components/CountCard";
+import ProgressBar from "../../components/ProgressBar";
+import { useNavigate } from "react-router-dom";
 
 function Dashboard() {
   const theme = useMantineTheme();
+  const navigate = useNavigate();
 
   const [scrollHeight, setScrollHeight] = useState<number>(0)
   const topRef = useRef<HTMLDivElement>(null);
- 
-  const handler = () =>{
+
+  const handler = () => {
     let height = window.innerHeight - (Number(topRef.current?.clientHeight) + 90);
     setScrollHeight(height)
   }
- 
-  useLayoutEffect(()=>{
+
+  useLayoutEffect(() => {
     handler();
-  },[])
+  }, [])
 
 
   const [year, setYear] = useState<ComboboxData | undefined>();
@@ -58,29 +61,36 @@ function Dashboard() {
     fetchData().then(() => setData({ ...obj }));
   }, [filter]);
 
-  const displayGroupItems = (index:number, department_id:string) =>{
-    let row =  data.department_list?.filter(obj => obj.department_id === department_id)[0];
-    if(row?.group !== undefined && row?.group.length > 0){
-      row?.group.map((item, index)=>{
-         return <>
-            <Table.Tr key={item.m_group_id}>
-              <Table.Td ta='center' w={60}>{index + 1}</Table.Td>
-              <Table.Td >{item.group_name}</Table.Td>
-              <Table.Td ta='center' w={225}><Box className="progress"><Box className="progress-bar" style={{ width: Math.ceil(Number(item.score)) + "%" }}>{Math.ceil(Number(item.score))}</Box></Box></Table.Td>
-              <Table.Td ta='center' w={75}>
-                {
-                  Number(item.score) > 0 && <Box c={(Number(data.overall_rating) > Number(item.score)) ? 'red' : 'green'}><i className="fa-solid fa-flag"></i></Box>
-                }
-              </Table.Td>
-              <Table.Td ta='center' w={120}>
-                <Flex gap={8} align='center' justify='center'>
-                  {Number(item.score) > 0 && <UnstyledButton><Text size="sm" c={theme.primaryColor}><i className='fa-solid fa-eye text-indigo'></i></Text></UnstyledButton>}
-                </Flex>
-              </Table.Td>
-            </Table.Tr>
-         </>
-      });
+  const displayGroupItems = (e:React.MouseEvent<HTMLButtonElement>, department_id: string) => {
+    let button = e.target as HTMLButtonElement;
+    const groupRow = document.querySelectorAll(`.group-row-`+department_id);
+
+   
+    
+    groupRow.forEach((row,index)=>{
+      if(button.classList.contains('active')){
+        row.classList.remove('active');
+      }
+      else{
+        row.classList.add('active');
+      }
+    });
+
+    if(button.classList.contains('active')){
+      button.classList.remove('active');
     }
+    else{
+      button.classList.add('active');
+      let row = button.closest('tr');
+      row?.scrollIntoView();
+    }
+
+
+
+  }
+
+  const redirectViewPage = (data:string)=>{
+    navigate('/dashboardView', {state:{"data":data}});
   }
 
   return (
@@ -119,17 +129,17 @@ function Dashboard() {
             }
           </Grid.Col>
         </Grid>
-      <Table>
-        <Table.Thead bg={theme.primaryColor} c='white'>
-          <Table.Tr>
-            <Table.Th ta='center' w={60}>S.No</Table.Th>
-            <Table.Th >Department</Table.Th>
-            <Table.Th ta='center' w={225}>Performance</Table.Th>
-            <Table.Th ta='center' w={75}>Flag</Table.Th>
-            <Table.Th ta='center' w={120}>View</Table.Th>
-          </Table.Tr>
-        </Table.Thead>
-      </Table>
+        <Table>
+          <Table.Thead bg={theme.primaryColor} c='white'>
+            <Table.Tr>
+              <Table.Th ta='center' w={60}>S.No</Table.Th>
+              <Table.Th >Department</Table.Th>
+              <Table.Th ta='center' w={225}>Performance</Table.Th>
+              <Table.Th ta='center' w={75}>Flag</Table.Th>
+              <Table.Th ta='center' w={120}>View</Table.Th>
+            </Table.Tr>
+          </Table.Thead>
+        </Table>
       </Box>
       <ScrollArea h={scrollHeight} w='100%'>
         <Table withColumnBorders withTableBorder>
@@ -139,22 +149,50 @@ function Dashboard() {
               <>
                 {
                   data?.department_list.map((item, index) => {
-                    return <Table.Tr key={item.department_id}>
-                      <Table.Td ta='center' w={60}>{index + 1}</Table.Td>
-                      <Table.Td >{item.department}</Table.Td>
-                      <Table.Td ta='center' w={225}><Box className="progress"><Box className="progress-bar" style={{ width: Math.ceil(Number(item.score)) + "%" }}>{Math.ceil(Number(item.score))}</Box></Box></Table.Td>
-                      <Table.Td ta='center' w={75}>
-                        {
-                          Number(item.score) > 0 && <Box c={(Number(data.overall_rating) > Number(item.score)) ? 'red' : 'green'}><i className="fa-solid fa-flag"></i></Box>
-                        }
-                      </Table.Td>
-                      <Table.Td ta='center' w={120}>
-                        <Flex gap={8} align='center' justify='center'>
-                          {Number(item.is_group) === 1 && <UnstyledButton onClick={(e)=>displayGroupItems(index, item.department_id)}><Text c='gray.7'><i className="fa-solid fa-large fa-square-g"></i></Text></UnstyledButton>}
-                          {Number(item.score) > 0 && <UnstyledButton><Text size="sm" c={theme.primaryColor}><i className='fa-solid fa-eye text-indigo'></i></Text></UnstyledButton>}
-                        </Flex>
-                      </Table.Td>
-                    </Table.Tr>
+                    return <Fragment key={item.department_id}>
+                      <Table.Tr>
+                        <Table.Td ta='center' w={60}>{index + 1}</Table.Td>
+                        <Table.Td >{item.department}</Table.Td>
+                        <Table.Td ta='center' w={225}><ProgressBar score={item.score} width={160} /></Table.Td>
+                        <Table.Td ta='center' w={75}>
+                          {
+                            Number(item.score) > 0 && <Box c={(Number(data.overall_rating) > Number(item.score)) ? 'red' : 'green'}><i className="fa-solid fa-flag"></i></Box>
+                          }
+                        </Table.Td>
+                        <Table.Td ta='center' w={120}>
+                          <Flex gap={8} align='center' justify='center'>
+                            {Number(item.is_group) === 1 && <UnstyledButton onClick={(event) => displayGroupItems(event, item.department_id)}><Text c='gray.7'><i className="fa-solid fa-large fa-square-g"></i></Text></UnstyledButton>}
+                            {Number(item.score) > 0 && <UnstyledButton onClick={()=>redirectViewPage(btoa(JSON.stringify(item)))}><Text size="sm" c={theme.primaryColor}><i className='fa-solid fa-eye text-indigo'></i></Text></UnstyledButton>}
+                          </Flex>
+                        </Table.Td>
+                      </Table.Tr>
+
+                      {
+                        item.is_group === "1" && <>
+                          {
+                            item?.group?.map((g_item, i) => {
+                              return <Fragment key={g_item.m_group_id}>
+                                <Table.Tr  bg='gray.1' className={`group-row group-row-${item.department_id}`}>
+                                  <Table.Td ta='end' w={60}>{(index + 1) + "." + (i+1)}</Table.Td>
+                                  <Table.Td >{g_item.group_name}</Table.Td>
+                                  <Table.Td ta='center' w={225}><ProgressBar score={g_item.score} width={160} bg="white" /></Table.Td>
+                                  <Table.Td ta='center' w={75}>
+                                    {
+                                      Number(g_item.score) > 0 && <Box c='green'><i className="fa-solid fa-flag"></i></Box>
+                                    }
+                                  </Table.Td>
+                                  <Table.Td ta='center' w={120}>
+                                    <Flex gap={8} align='center' justify='center'>
+                                      {Number(g_item.score) > 0 && <UnstyledButton><Text size="sm" c={theme.primaryColor}><i className='fa-solid fa-eye text-indigo'></i></Text></UnstyledButton>}
+                                    </Flex>
+                                  </Table.Td>
+                                </Table.Tr>
+                              </Fragment>
+                            })
+                          }
+                        </>
+                      }
+                    </Fragment>
                   })
                 }
               </>
