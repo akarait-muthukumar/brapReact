@@ -54,7 +54,7 @@ function LoginForm() {
             <TextInput label="User ID"  key={form.key('userID')} {...form.getInputProps('userID')}/>
             <TextInput  type='password' autoComplete='off' my={16} label="Password" key={form.key('user_password')} {...form.getInputProps('user_password')}/>
             <Group justify='end'>
-                <Button type='submit' leftSection={<i className='fas fa-key'></i>} size='xs' variant="filled" color={theme.primaryColor}>Login</Button>
+                <Button type='submit' leftSection={<i className='fas fa-key'></i>} color={theme.primaryColor}>Login</Button>
             </Group>
         </Box>
     </>

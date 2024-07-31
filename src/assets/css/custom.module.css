@@ -57,4 +57,7 @@
     color: white;
     background-color: var(--mantine-primary-color-8);
 }
-
+.mantine-Tooltip-tooltip{
+    padding: 8px;
+    filter: drop-shadow(0 0 3px #0003);
+}

@@ -1,3 +1,5 @@
+import type {TitleWithProgressBarType} from "../pages/dashboard/TitleWithProgressBar";
+
 export type filterType = {
     year:string | null;
 }
@@ -24,5 +26,32 @@ export type dataType = {
 }
 
 export type chartPropsType = {
-    score:number
+    score:number;
+    label?:string;
+    height?:number,
+    thickness?:number,
+    centerY?:number,
+}
+
+export type dashboardViewDataType = {
+    application_convenience: TitleWithProgressBarType[];
+    tracking_convenience: TitleWithProgressBarType[];
+    process_convenience: TitleWithProgressBarType[];
+    tooltip:{
+        application_convenience:number;
+        overall_score:number;
+        performance_rating:number;
+        process_convenience:number;
+        timeline_compliance:number;
+        tracking_convenience:number;
+    };
+    performance_rating:{
+        qf1:number;
+        qf2:number;
+        qf3:number;
+        qf4:number;
+    }
+    completed_survey:string;
+    overall_score:number;
+    timeline_compliance:number;
 }

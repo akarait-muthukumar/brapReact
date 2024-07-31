@@ -22,7 +22,7 @@ function GaugeChart(props:chartPropsType) {
             plotBackgroundImage: null,
             plotBorderWidth: 0,
             plotShadow: false,
-            height:160,
+            height:props.height ? props.height : 180,
         },
         title: null,
         credits: {
@@ -38,7 +38,7 @@ function GaugeChart(props:chartPropsType) {
             startAngle: -90,
             endAngle: 89.9,
             background: null,
-            center: ['50%', '87%'],
+            center: ['50%', `${props.centerY ? props.centerY : 87}%`],
             size: '180%'
         },
     
@@ -57,28 +57,28 @@ function GaugeChart(props:chartPropsType) {
                 from: 0,
                 to: 33,
                 color: '#c63a3a', // green
-                thickness: 50
+                thickness: props.thickness ? props.thickness : 50
             }, {
                 from: 33,
                 to: 67,
                 color: '#ffbf00', // yellow
-                thickness: 50
+                thickness: props.thickness ? props.thickness : 50
             }, {
                 from: 67,
                 to: 100,
                 color: '#25682a', // red
-                thickness: 50
+                thickness: props.thickness ? props.thickness : 50
             }],
         },
     
         series: [{
-            name: 'score',
+            name: props.label ?? 'Score',
             data: [props.score],
             tooltip: {
                 valueSuffix: ' %'
             },
             dataLabels: {
-                format:`<div class='text-center'><h6 class='fw-bold mb-0'>Score {y}%</h6></div>`,
+                format:`<div class='text-center'><h6 class='fw-bold mb-0'>${props.label ?? 'Score'} {y}%</h6></div>`,
                 borderWidth: 0,
                 style: {
                     fontSize: '14px'

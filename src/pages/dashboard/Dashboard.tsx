@@ -125,7 +125,7 @@ function Dashboard() {
           </Grid.Col>
           <Grid.Col span={{ lg: 4 }}>
             {
-              data.overall_rating !== 0 && <Paper p={0} h='100%'><GaugeChart score={data.overall_rating} /></Paper>
+              data.overall_rating !== 0 && <Paper p={0} h='100%'><GaugeChart score={data.overall_rating} height={160} /></Paper>
             }
           </Grid.Col>
         </Grid>
@@ -183,7 +183,7 @@ function Dashboard() {
                                   </Table.Td>
                                   <Table.Td ta='center' w={120}>
                                     <Flex gap={8} align='center' justify='center'>
-                                      {Number(g_item.score) > 0 && <UnstyledButton><Text size="sm" c={theme.primaryColor}><i className='fa-solid fa-eye text-indigo'></i></Text></UnstyledButton>}
+                                      {Number(g_item.score) > 0 && <UnstyledButton onClick={()=>redirectViewPage(btoa(JSON.stringify({...item, ...g_item})))}><Text size="sm" c={theme.primaryColor}><i className='fa-solid fa-eye text-indigo'></i></Text></UnstyledButton>}
                                     </Flex>
                                   </Table.Td>
                                 </Table.Tr>

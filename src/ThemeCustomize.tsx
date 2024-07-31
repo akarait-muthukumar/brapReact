@@ -1,5 +1,5 @@
 
-import {Button, TextInput, NavLink, Paper, Select} from '@mantine/core';
+import {Button, TextInput, NavLink, Paper, Select, Tooltip} from '@mantine/core';
 import customCss from './assets/css/custom.module.css'
 
 // customize theme
@@ -19,6 +19,15 @@ export const ThemeModify:any = {
         label: customCss['mantine-Button-label'],
         section: customCss['mantine-Button-section']
       },
+      defaultProps:{
+        size:"xs",
+        variant:"filled"
+      }
+    }),
+    Tooltip:Tooltip.extend({
+      classNames: {
+        tooltip: customCss["mantine-Tooltip-tooltip"],
+      }
     }),
     Input:TextInput.extend({
       classNames: {
