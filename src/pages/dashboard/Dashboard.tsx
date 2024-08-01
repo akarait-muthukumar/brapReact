@@ -108,7 +108,6 @@ function Dashboard() {
                     <Select
                       label="Assessment Year"
                       value={filter.year}
-                      withCheckIcon={false}
                       data={year}
                       onChange={(_value) => setFilter({ ...filter, "year": _value })}
                     />

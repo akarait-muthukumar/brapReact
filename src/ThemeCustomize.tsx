@@ -1,5 +1,6 @@
 
 import {Button, TextInput, NavLink, Paper, Select, Tooltip} from '@mantine/core';
+import { MonthPickerInput } from '@mantine/dates';
 import customCss from './assets/css/custom.module.css'
 
 // customize theme
@@ -10,7 +11,8 @@ export const ThemeModify:any = {
   primaryShade: 8,
   scale:1,
   colors:{
-    'blue':["#eef0fe","#dae6f5","#b3cae7", "#89adda", "#6694cf", "#5084c9", "#447cc7", "#346ab1", "#2b5e9f", "#1b518d"]
+    'blue':["#eef0fe","#dae6f5","#b3cae7", "#89adda", "#6694cf", "#5084c9", "#447cc7", "#346ab1", "#2b5e9f", "#1b518d"],
+    'green':["#eefcf5","#dcf7ea","#b4eed2","#88e5b8","#67dea3","#52d996","#46d78e","#38bf7a","#2da96b","#1b935b"]
   },
   components:{
     Button:Button.extend({
@@ -64,6 +66,8 @@ export const ThemeModify:any = {
         rightSection:<i className="fa-sharp fa-solid fa-caret-down"></i>,
         rightSectionWidth:24,
         maxDropdownHeight:200,
+        placeholder:"Select",
+        allowDeselect:false,
         comboboxProps:{
           dropdownPadding: 0
         }
@@ -72,6 +76,14 @@ export const ThemeModify:any = {
         option:customCss['mantine-Select-option'],
         section:customCss['mantine-Select-section'],
         input:customCss['mantine-Select-input'],
+      }
+    }),
+    MonthPickerInput:MonthPickerInput.extend({
+      defaultProps:{
+        allowDeselect:false,
+        labelSeparator:'to',
+        valueFormat:"MMM-YYYY",
+        placeholder:"Pick date range"
       }
     }),
   },

@@ -1,12 +1,11 @@
-import { createContext, useContext, useReducer, PropsWithChildren, useEffect} from "react"
+import { createContext, useContext, useReducer, PropsWithChildren} from "react"
 import { initialType, contextType} from "../types/Report";
 import ReportAction from "../reducers/ReportAction";
-import { api } from "../utils/ApiService";
 
 const initialValue:initialType = {
     filter:{
-        year: null,
-        survey_month:null,
+        year: '2024',
+        survey_month:[null, null],
         department_id:null,
         reform: null,
         status:null

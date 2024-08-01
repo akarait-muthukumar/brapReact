@@ -8,7 +8,7 @@ function Report() {
 
   return (
     <>
-      <Paper mb={16} ref={topref} py={4}>
+      <Paper mb={8} ref={topref} py={4}>
         <Flex align='center' justify='space-between' gap={8}>
           <Text fw={500} size="sm">Report</Text>
           <Button leftSection={<i className="fa-regular fa-file-excel"></i>} color="green.9" onClick={() => { window.history.go(-1) }}>Excel</Button>

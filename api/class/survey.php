@@ -45,7 +45,7 @@ class Survey{
                         $where .= "  AND fcd.deleted = 0  AND fcd.errStatus = 'Valid' ";
                 }
 
-                $sql = "SELECT dw.department_id as id, dw.DeptName as text FROM departmentwisereformid dw 
+                $sql = "SELECT dw.department_id as `value`, dw.DeptName as label FROM departmentwisereformid dw 
                 INNER JOIN m_department md ON md.department_code = dw.DeptID {$leftJoin}
                 WHERE dw.is_deleted = 0 and m_parent_department_id IS NULL {$where} GROUP BY dw.DeptName ORDER BY dw.DeptName";
 
@@ -54,7 +54,7 @@ class Survey{
                 if($result){
                         //add All value
                         if(isset($_POST['all_value']) && $_POST['all_value'] == true){
-                                array_unshift($result,  array('id'=>'-1', 'text'=>'All')) ;
+                                array_unshift($result,  array('value'=>'-1', 'label'=>'All')) ;
                         }
                 }
 
@@ -79,7 +79,7 @@ class Survey{
 
                 if(isset($_POST['uploaded_dept_only']) && $_POST['uploaded_dept_only'] == 'not_completed'){
 
-                        $sql = "SELECT DISTINCT Reform_Number as id, Reform_Number as text FROM firm_company_details
+                        $sql = "SELECT DISTINCT Reform_Number as `value`, Reform_Number as label FROM firm_company_details
                         WHERE deleted = 0 AND errStatus = 'Valid' AND category='NA' AND Survey_Year = {$_POST["year"]} 
                         AND survey_comp_status NOT IN ('Completed','Not Interested') AND {$where} ORDER BY Reform_Number";  
 
@@ -87,7 +87,7 @@ class Survey{
 
                         if(isset($_POST['all_value']) && $_POST['all_value'] == true){
                                 //add All value
-                                array_unshift($result,  array('id'=>'-1', 'text'=>'All')) ;
+                                array_unshift($result,  array('value'=>'-1', 'label'=>'All')) ;
                         }
 
                         return $result;
@@ -134,12 +134,12 @@ class Survey{
                         $main_result = array();
 
                         foreach($unique_array as $key => $val){
-                                array_push($main_result , array('id'=>$val, 'text'=>$val));
+                                array_push($main_result , array('value'=>$val, 'label'=>$val));
                         }
                    
                         if(isset($_POST['all_value']) && $_POST['all_value'] == true){
                                 //add All value
-                                array_unshift($main_result,  array('id'=>'-1', 'text'=>'All')) ;
+                                array_unshift($main_result,  array('value'=>'-1', 'label'=>'All')) ;
                         }
 
                         return $main_result;
@@ -173,7 +173,7 @@ class Survey{
                         $where .= " AND Reform_Number = {$_POST["reform_number"]}";
                 }
 
-                $sql = "SELECT DISTINCT Service_Used as id , Service_Used as text FROM firm_company_details
+                $sql = "SELECT DISTINCT Service_Used as `value` , Service_Used as label FROM firm_company_details
                 WHERE deleted = 0 AND errStatus = 'Valid' AND category='NA' AND survey_comp_status NOT IN ('Completed','Not Interested') $where "; 
 
                 return $this->db->getAll($sql);
@@ -206,7 +206,7 @@ class Survey{
                         $where .= " AND Service_Used = '{$service}'";
                 }
 
-                $sql = " SELECT DISTINCT District as id , District as text 
+                $sql = " SELECT DISTINCT District as `value` , District as label 
                 FROM firm_company_details
                 WHERE deleted =0 AND survey_comp_status !='Completed' 
                 AND errStatus = 'Valid'  AND category='NA' 
@@ -258,14 +258,14 @@ class Survey{
                         $where .= " AND survey_comp_status NOT IN ('Completed','Not Interested')";
                 }
 
-                $sql = "SELECT DISTINCT `Month` as id , REPLACE(`Month`, '-','-20')  as text  FROM firm_company_details  
+                $sql = "SELECT DISTINCT `Month` as `value` , REPLACE(`Month`, '-','-20')  as label  FROM firm_company_details  
                 WHERE deleted =0 AND errStatus = 'Valid' AND category='NA' $where ORDER BY Survey_Date DESC";
 
                 $result = $this->db->getAll($sql);
 
                 if(isset($_POST['all_value']) && $_POST['all_value'] == true){
                       //add All value
-                      array_unshift($result,  array('id'=>'-1', 'text'=>'All')) ;
+                      array_unshift($result,  array('value'=>'-1', 'label'=>'All')) ;
                 }
 
                 return $result;
@@ -278,10 +278,10 @@ class Survey{
                         $where .= " AND Survey_Year = {$_POST["year"]}";
                 }
 
-                $sql = "SELECT DATE_FORMAT(MIN(Survey_Date) , '%b-%Y') AS min_date, DATE_FORMAT(MAX(Survey_Date) , '%b-%Y') AS max_date FROM firm_company_details  
+                $sql = "SELECT MIN(Survey_Date) AS min_date, MAX(Survey_Date) AS max_date FROM firm_company_details  
                 WHERE deleted = 0 AND errStatus = 'Valid' AND flag NOT IN (2) AND category='NA' {$where} ORDER BY Survey_Date DESC";
 
-                return $this->db->getAll($sql);
+                return $this->db->getRow($sql);
         }
 
         public function getSurveyList(){

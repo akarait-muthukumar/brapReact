@@ -15,7 +15,7 @@ type tableDataType = {
 
 export type filterType = {
     year: string | null;
-    survey_month: string | null;
+    survey_month: [Date | null, Date | null];
     department_id: string | null;
     reform: string | null;
     status: string | null;
@@ -27,11 +27,19 @@ export type initialType = {
     getReport:boolean
 }
 
-export type actionType = { type: 'year', payload: string | null } | { type: 'survey_month', payload: string | null } | { type: 'department_id', payload: string | null }
+export type actionType = { type: 'year', payload: string | null } | { type: 'survey_month', payload: [Date | null, Date | null] } | { type: 'department_id', payload: string | null }
     | { type: 'reform', payload: string | null } | { type: 'status', payload: string | null } | { type: 'tableData', payload: tableDataType[] | null }
     | { type: 'getReport', payload: boolean }
 
 export type contextType = {
     state: initialType,
     dispatch: Dispatch<actionType>
+}
+
+export type fieldErrorType = { 
+    year: boolean;
+    survey_month: boolean;
+    department_id: boolean;
+    reform: boolean;
+    status: boolean;
 }
