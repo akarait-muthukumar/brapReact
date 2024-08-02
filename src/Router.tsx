@@ -22,6 +22,7 @@ import DashboardView from './pages/dashboard/DashboardView';
 // context
 import LayoutContext from './contextapi/LayoutContext';
 import ReportContext from './contextapi/ReportContext';
+import ServiceContext from './contextapi/ServiceContext';
 
 type navType = RouteObject & { m_user_type_id: Number[] }
 
@@ -58,7 +59,7 @@ const navs: navType[] = [
     },
     {
         path: '/service',
-        element:<Service/>,
+        element:<ServiceContext><Service/></ServiceContext>,
         m_user_type_id: [10000, 1000]
     },
     {
