@@ -1,5 +1,5 @@
 
-import {Button, TextInput, NavLink, Paper, Select, Tooltip} from '@mantine/core';
+import {Button, TextInput, NavLink, Paper, Select, Tooltip, MultiSelect} from '@mantine/core';
 import { MonthPickerInput } from '@mantine/dates';
 import customCss from './assets/css/custom.module.css'
 
@@ -76,6 +76,21 @@ export const ThemeModify:any = {
         option:customCss['mantine-Select-option'],
         section:customCss['mantine-Select-section'],
         input:customCss['mantine-Select-input'],
+      }
+    }),
+    MultiSelect:MultiSelect.extend({
+      defaultProps:{
+        withCheckIcon:false,
+        rightSection:<i className="fa-sharp fa-solid fa-caret-down"></i>,
+        rightSectionWidth:24,
+        placeholder:"Multi Select",
+      },
+      classNames:{
+        option:customCss['mantine-Select-option'],
+        section:customCss['mantine-MultiSelect-section'],
+        input:customCss['mantine-MultiSelect-input'],
+        pill:customCss['mantine-Pill-label'],
+        pillsList:customCss['mantine-MultiSelect-pillsList']
       }
     }),
     MonthPickerInput:MonthPickerInput.extend({

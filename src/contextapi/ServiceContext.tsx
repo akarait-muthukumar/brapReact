@@ -4,7 +4,8 @@ import ServiceAction from "../reducers/ServiceAction";
 
 const initialValue:initialValueType = {
     show:"20",
-    currentPage:1,
+    pageTotal:1,
+    pageValue:1,
     data:null,
     renderData:null
 }

@@ -56,7 +56,7 @@ export default function ServiceTable() {
               </Grid.Col>
               <Grid.Col span={'content'}><Text ta={'center'} size="sm">Showing 1 to 80 of 170 entries</Text></Grid.Col>
               <Grid.Col span={'content'}>
-                  <Pagination total={state.currentPage} size={'sm'} onChange={(_value)=>  dispatch({type:'currentPage', payload:_value})}/>
+                  <Pagination total={state.pageTotal} size={'sm'} value={state.pageValue} onChange={(_value)=>  dispatch({type:'pageValue', payload:_value})}/>
               </Grid.Col>
           </Grid>
         </>

@@ -12,7 +12,7 @@ function Service() {
   useEffect(()=>{
     api.fetch({'type':'getServiceList'}).then((res)=>{
         dispatch({type:'data', payload: res?.data});
-        dispatch({type:'currentPage', payload: Math.ceil(res?.data.length / 20)});
+        dispatch({type:'pageTotal', payload: Math.ceil(res?.data.length / 20)});
     });
   },[dispatch]);
 

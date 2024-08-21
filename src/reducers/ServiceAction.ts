@@ -4,8 +4,10 @@ export default function ServiceAction(state:initialValueType, action:actionType)
     switch(action.type){
         case 'show':
             return {...state, show:action.payload};
-        case 'currentPage':
-            return {...state, currentPage:action.payload};
+        case 'pageTotal':
+            return {...state, pageTotal:action.payload};
+        case 'pageValue':
+            return {...state, pageValue:action.payload};
         case 'data':
             return {...state, data:action.payload};
         case "renderData":

@@ -1,9 +1,10 @@
-import { Select, Button, ComboboxData, Grid } from "@mantine/core"
+import { Select, MultiSelect , Button, ComboboxData, Grid } from "@mantine/core"
 import { MonthPickerInput } from "@mantine/dates";
 import { useReport } from "../../contextapi/ReportContext";
 import { api } from "../../utils/ApiService";
 import { useEffect, useState } from "react";
 import type { fieldErrorType, filterType } from "../../types/Report";
+import dayjs from "dayjs";
 import '@mantine/dates/styles.css';
 function ReportFilter() {
 
@@ -38,7 +39,6 @@ function ReportFilter() {
     });
   }, []);
 
-
   useEffect(() => {
   
     const fetchData = async () => {
@@ -61,7 +61,6 @@ function ReportFilter() {
 
   }, [state.filter.year]);
 
-
   useEffect(() => {
 
     const fetchData = async () => {
@@ -82,6 +81,7 @@ function ReportFilter() {
   }, [state.filter.year, state.filter.department_id]);
 
 
+
   const validate = () =>{
     let isError = false;
     for (let key in state.filter) {
@@ -100,9 +100,10 @@ function ReportFilter() {
     return isError;
   }
 
-  const getResult = () => {
+  const getResult = async() => {
     if(!validate()){
-        alert('hi');
+      let res = await api.fetch({'type':'getReportList', ...state.filter, survey_month:[dayjs(state.filter.survey_month[0]).format('YYYY-MM-DD'), dayjs(state.filter.survey_month[1]).endOf('month').format('YYYY-MM-DD')]});
+      console.log(res);
     }
   }
 
@@ -141,7 +142,7 @@ function ReportFilter() {
             label="Department"
             value={state.filter.department_id}
             data={department}
-            onChange={(_value) => {dispatch({ type: 'department_id', payload: _value }); dispatch({ type: 'reform', payload: null }); setFieldError({...fieldError, department_id:false, reform:false})}}
+            onChange={(_value) => {dispatch({ type: 'department_id', payload: _value }); dispatch({ type: 'reform', payload: [] }); setFieldError({...fieldError, department_id:false, reform:false})}}
             error={fieldError.department_id}
           />
         </Grid.Col>
@@ -149,9 +150,9 @@ function ReportFilter() {
       {
         state.filter.year !== null && state.filter.department_id !== null &&
         <Grid.Col span={3}>
-          <Select
+          <MultiSelect
             label="Reform"
-            value={state.filter.reform}
+            value={state.filter.reform == null ? [] :  state.filter.reform}
             data={reform}
             onChange={(_value) => {dispatch({ type: 'reform', payload: _value }); setFieldError({...fieldError,reform:false})}}
             error={fieldError.reform}
@@ -160,9 +161,9 @@ function ReportFilter() {
       }
 
       <Grid.Col span={3}>
-        <Select
+        <MultiSelect
           label="Status"
-          value={state.filter.status}
+          value={state.filter.status == null ? [] :  state.filter.status}
           data={status}
           onChange={(_value) => {dispatch({ type: 'status', payload: _value }); setFieldError({...fieldError,status:false})}}
           error={fieldError.status}

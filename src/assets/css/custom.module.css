@@ -43,7 +43,7 @@
 .mantine-Select-option{
     border-radius: 0;
 }
-.mantine-Select-section{
+.mantine-Select-section, .mantine-MultiSelect-section{
     font-size: 12px;
 }
 .mantine-Select-input[data-expanded = true] ~ .mantine-Select-section{
@@ -60,4 +60,18 @@
 .mantine-Tooltip-tooltip{
     padding: 8px;
     filter: drop-shadow(0 0 3px #0003);
+}
+.mantine-MultiSelect-pillsList{
+    padding: 4px 0;
+    gap: 4px;
+}
+.mantine-MultiSelect-input{
+    height: auto;
+}
+.mantine-MultiSelect-input[data-expanded = true] ~ .mantine-MultiSelect-section{
+    transform: rotate(180deg);
+}
+.mantine-Pill-label{
+    border-radius: 2px;
+    border: 1px solid var(--mantine-color-gray-3);
 }

@@ -2,12 +2,13 @@ import { Dispatch } from "react";
 
 export type initialValueType = {
     show: string;
-    currentPage: number;
+    pageTotal: number;
+    pageValue: number;
     data:tableDataType[] | null;
     renderData:tableDataType[] | null;
 }
 
-export type actionType = {type:'show', payload:string} | {type:'currentPage', payload:number}
+export type actionType = {type:'show', payload:string} | {type:'pageTotal', payload:number} | {type:'pageValue', payload:number}
  | {type:'data', payload:tableDataType[]} | {type:'renderData', payload:tableDataType[]}
 
 export type contextType = {

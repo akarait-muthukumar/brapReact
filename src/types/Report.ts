@@ -1,5 +1,5 @@
 import { Dispatch } from "react";
-
+import { ComboboxData } from "@mantine/core";
 type tableDataType = {
     Contact_Address: string
     Contact_Person: string
@@ -17,8 +17,8 @@ export type filterType = {
     year: string | null;
     survey_month: [Date | null, Date | null];
     department_id: string | null;
-    reform: string | null;
-    status: string | null;
+    reform: string[] | null;
+    status: string[] | null;
 }
 
 export type initialType = {
@@ -28,7 +28,7 @@ export type initialType = {
 }
 
 export type actionType = { type: 'year', payload: string | null } | { type: 'survey_month', payload: [Date | null, Date | null] } | { type: 'department_id', payload: string | null }
-    | { type: 'reform', payload: string | null } | { type: 'status', payload: string | null } | { type: 'tableData', payload: tableDataType[] | null }
+    | { type: 'reform', payload: string[] | null } | { type: 'status', payload: string[] | null } | { type: 'tableData', payload: tableDataType[] | null }
     | { type: 'getReport', payload: boolean }
 
 export type contextType = {

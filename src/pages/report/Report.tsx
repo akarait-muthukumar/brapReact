@@ -1,6 +1,8 @@
 import {useRef } from "react";
 import { Paper, Text, Flex, Button } from "@mantine/core";
 import ReportFilter from "./ReportFilter";
+import ReportTable from "./ReportTable";
+
 function Report() {
 
   const topref = useRef<HTMLDivElement>(null);
@@ -18,6 +20,8 @@ function Report() {
       <Paper>
         <ReportFilter />
       </Paper>
+
+      <ReportTable/>
 
     </>
   )
