@@ -4,9 +4,12 @@ import ServiceAction from "../reducers/ServiceAction";
 
 const initialValue:initialValueType = {
     show:"20",
+    entries:'',
+    search:'',
     pageTotal:1,
     pageValue:1,
     data:null,
+    searchData:null,
     renderData:null
 }
 

@@ -32,7 +32,7 @@ export default function ServiceTable() {
                   {
                     state.renderData.map((td,index)=>{
                       return <Table.Tr key={index}>
-                      <Table.Td ta={'center'}>{index + 1}</Table.Td>
+                      <Table.Td ta={'center'}>{((state.pageValue - 1) * parseInt(state.show)) + (index + 1)}</Table.Td>
                       <Table.Td>{td.service_name}</Table.Td>
                       <Table.Td>{JSON.parse(td.reform_number).join(', ')}</Table.Td>
                       <Table.Td ta={'center'}>
@@ -52,9 +52,9 @@ export default function ServiceTable() {
         <>
           <Grid gutter={8} align='center' justify='space-between'>
               <Grid.Col span={'content'}>
-                  <Select data={showData} defaultValue={state.show} size={"xs"} w={50}/>
+                  <Select data={showData} defaultValue={state.show} size={"xs"} w={50} onChange={(_value)=>  dispatch({type:'show', payload:_value == null ? state.show : _value})}/>
               </Grid.Col>
-              <Grid.Col span={'content'}><Text ta={'center'} size="sm">Showing 1 to 80 of 170 entries</Text></Grid.Col>
+              <Grid.Col span={'content'}><Text ta={'center'} size="sm">{state.entries}</Text></Grid.Col>
               <Grid.Col span={'content'}>
                   <Pagination total={state.pageTotal} size={'sm'} value={state.pageValue} onChange={(_value)=>  dispatch({type:'pageValue', payload:_value})}/>
               </Grid.Col>
