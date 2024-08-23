@@ -1,70 +1,78 @@
 import type { initialValueType, actionType } from "../types/Service";
 
 export default function ServiceAction(state:initialValueType, action:actionType){
-
-
-    // search 
-    function search(payload:string){
-        let searchData = null;
-        if(state.data !== null){
-            let x = state.data.filter((item)=>{
-                return item.service_name.toLowerCase().includes(payload.toLowerCase()) ||
-                 item.reform_number.toLowerCase().includes(payload.toLowerCase())
-            });
-            searchData = x;
-        }
-        return searchData;
+   
+    // Show Entries 
+    const _fnEntries = (_start:number = 0, _end:number = 0, _total:number = 0) => {
+        return `Showing ${_start} to ${_end} of ${_total} entries`;
     }
 
-    // RenderData
-    function rd(payload:string){
+    // show 
+    const _fnShow = (payload:number) =>{
+        let renderData = null, pageTotal = state.pageTotal, entries = state.entries;
+            if(state.searchData != null){
+                renderData = (payload === -1) ? state.searchData : state.searchData.slice(0, payload);
+                pageTotal =  (payload === -1) ? 1 : Math.ceil(state.searchData.length / payload);
+                entries = _fnEntries(1,(payload === -1) ? state.searchData.length : payload, state.searchData.length);
+            }
+        return {...state, show:String(payload), renderData:renderData, pageValue:1, pageTotal:pageTotal, entries:entries};
+    }
+
+    // pagination value oncahnge
+    const _fnPageValue = (payload:number) =>{
+        let renderData = null, entries = state.entries;
         if(state.searchData != null){
-            return (payload === '-1') ? state.data : state.searchData.slice(0, parseInt(payload));
+            let start = (payload - 1) * parseInt(state.show);
+            let _end = payload * parseInt(state.show);
+            let end = _end > state.searchData.length ? state.searchData.length : _end;
+
+            renderData =  state.searchData.slice(start, end);
+
+            entries = _fnEntries(start + 1 ,end, state.searchData.length);
         }
-        return null;
+        return {...state, renderData:renderData, pageValue:payload, entries:entries};
     }
 
+   // search 
+   const _fnSearch = (payload:string) => {
 
+    let x = payload.trim(), searchData = state.data, entries = _fnEntries(), renderData = null;
+    
+    if(x.length > 0 && state.data !== null){
+        searchData = state.data.filter((item)=>{
+            return item.service_name.toLowerCase().includes(payload.toLowerCase()) || 
+             item.reform_number.toLowerCase().includes(payload.toLowerCase())
+        });
+    }
+
+    if(searchData !== null){
+        renderData = searchData.slice(0, parseInt(state.show));
+        entries = _fnEntries(1 , parseInt(state.show) > searchData.length ? searchData.length : parseInt(state.show), searchData.length)
+    }
+
+    return {...state, search:payload, searchData:searchData,
+         pageTotal:searchData == null ? 1 : Math.ceil(searchData.length / parseInt(state.show)),
+         renderData: renderData,
+         pageValue:1,
+         entries:entries
+        };
+    }
 
     switch(action.type){
         case 'show':{
-            let renderData = null, pageTotal = state.pageTotal, entries = state.entries;
-            if(state.searchData != null){
-                renderData = rd(action.payload);
-                pageTotal =  (action.payload === '-1') ? 1 : Math.ceil(state.searchData.length / parseInt(action.payload));
-                entries = `Showing 1 to ${(action.payload === '-1') ? state.searchData.length : action.payload} of ${state.searchData.length} entries`;
-            }
-            return {...state, show:action.payload, renderData:renderData, pageValue:1, pageTotal:pageTotal, entries:entries};
+            return _fnShow(parseInt(action.payload));
         }
         case 'entries':
             return {...state, entries:action.payload};
         case 'pageTotal':
             return {...state, pageTotal:action.payload};
         case 'pageValue':{
-            let renderData = null, entries = state.entries;
-            if(state.searchData != null){
-                let start = (action.payload - 1) * parseInt(state.show);
-                let _end = action.payload * parseInt(state.show);
-                let end = _end > state.searchData.length ? state.searchData.length : _end;
-
-                renderData =  state.searchData.slice(start, end);
-
-                entries = `Showing ${start + 1} to ${end} of ${state.searchData.length} entries`;
-            }
-            return {...state, renderData:renderData, pageValue:action.payload, entries:entries};
+            return _fnPageValue(action.payload);
         }
         case 'data':
             return {...state, data:action.payload, searchData:action.payload};
         case 'search':{
-            let x = action.payload.trim(), searchData = state.data;
-            if(x.length > 0){
-                searchData = search(x);
-            }
-            return {...state, search:action.payload, searchData:searchData,
-                 pageTotal:searchData == null ? 1 : Math.ceil(searchData.length / parseInt(state.show)),
-                 renderData: rd(state.show),
-                 pageValue:1
-                };
+           return _fnSearch(action.payload);
         }
         case "renderData":
             return {...state, renderData:action.payload};
