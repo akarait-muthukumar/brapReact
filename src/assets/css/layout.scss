@@ -25,6 +25,10 @@
         height: 56px;
         border-bottom: 1px solid var(--mantine-color-gray-3);
     }
+
+    .main{
+        height: calc(100% - 57px);
+    }
     
     // If fold the sidebar
     &.active{

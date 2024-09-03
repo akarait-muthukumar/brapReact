@@ -18,6 +18,9 @@ export type actionType = {type:'show', payload:string} | {type:'entries', payloa
 export type contextType = {
     state:initialValueType;
     dispatch:Dispatch<actionType>;
+    pageTitleBarRef: React.MutableRefObject<HTMLDivElement | null>
+    tableHeaderRef: React.MutableRefObject<HTMLTableElement | null>
+    tableFooterRef: React.MutableRefObject<HTMLTableElement | null>
 }
 
 export type tableDataType = {

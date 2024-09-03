@@ -23,21 +23,21 @@ function SideBar() {
           id:1,
           icon:"fa-solid fa-chart-pie",
           label:'dashboard',
-          path:'/',
+          path:'/dashboard',
           m_user_type_id:[10000,1000,100]
         },
         {
           id:2,
           icon:"fa-solid fa-chart-pie",
           label:'dashboard',
-          path:'/',
+          path:'/interviewerdashboard',
           m_user_type_id:[1]
         },
         {
           id:3,
           icon:"fa-solid fa-chart-pie",
           label:'dashboard',
-          path:'/',
+          path:'/datauploaderdashboard',
           m_user_type_id:[10]
         },
       ]

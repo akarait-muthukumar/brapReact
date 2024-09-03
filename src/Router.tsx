@@ -1,34 +1,39 @@
-import { createBrowserRouter, RouteObject } from 'react-router-dom';
-import NotFound from './pages/NotFound';
-import Company from './pages/company/Company';
-import DailyCallReport from './pages/dailyCallReport/DailyCallReport';
-import Dashboard from './pages/dashboard/Dashboard';
-import DataUploaderDashboard from './pages/dataUploaderDashboard/DataUploaderDashboard';
-import DataUploaderReport from './pages/dataUploaderReport/DataUploaderReport';
-import Department from './pages/department/Department';
-import DeptWiseReformNo from './pages/deptWiseReformNo/DeptWiseReformNo';
-import InterviewerDashboard from './pages/interviewerDashboard/InterviewerDashboard';
-import Layout from './pages/layout/Layout';
-import Login from './pages/login/Login';
-import MisStatus from './pages/misStatus/MisStatus';
-import ReformNumber from './pages/reformNumber/ReformNumber';
-import Report from './pages/report/Report';
-import Service from './pages/service/Service';
-import Survey from './pages/survey/Survey';
-import SurveyYear from './pages/surveyYear/SurveyYear';
-import UserRemarks from './pages/userRemarks/UserRemarks';
-import DashboardView from './pages/dashboard/DashboardView';
-
+import{ lazy} from 'react';
+import { createBrowserRouter, RouteObject} from 'react-router-dom';
 // context
 import LayoutContext from './contextapi/LayoutContext';
 import ReportContext from './contextapi/ReportContext';
 import ServiceContext from './contextapi/ServiceContext';
 
+import Login from './pages/login/Login';
+import Layout from './pages/layout/Layout';
+
+const NotFound = lazy(()=> import('./pages/NotFound'));
+const Company = lazy(()=> import('./pages/company/Company'));
+const DailyCallReport = lazy(()=> import('./pages/dailyCallReport/DailyCallReport'));
+const Dashboard = lazy(()=> import('./pages/dashboard/Dashboard'));
+const DataUploaderDashboard = lazy(()=> import('./pages/dataUploaderDashboard/DataUploaderDashboard'));
+const DataUploaderReport = lazy(()=> import('./pages/dataUploaderReport/DataUploaderReport'));
+const Department = lazy(()=> import('./pages/department/Department'));
+const DeptWiseReformNo = lazy(()=> import('./pages/deptWiseReformNo/DeptWiseReformNo'));
+const InterviewerDashboard = lazy(()=> import('./pages/interviewerDashboard/InterviewerDashboard'));
+
+const MisStatus = lazy(()=> import('./pages/misStatus/MisStatus'));
+const ReformNumber = lazy(()=> import('./pages/reformNumber/ReformNumber'));
+const Report = lazy(()=> import('./pages/report/Report'));
+const Service = lazy(()=> import('./pages/service/Service'));
+const Survey = lazy(()=> import('./pages/survey/Survey'));
+const SurveyYear = lazy(()=> import('./pages/surveyYear/SurveyYear'));
+const UserRemarks = lazy(()=> import('./pages/userRemarks/UserRemarks'));
+const DashboardView = lazy(()=> import('./pages/dashboard/DashboardView'));
+const UserManagement = lazy(()=> import('./pages/userManagement/UserManagement'));
+
+
 type navType = RouteObject & { m_user_type_id: Number[] }
 
 const navs: navType[] = [
     {
-        path: '/',
+        path: '/dashboard',
         element: <Dashboard />,
         m_user_type_id: [10000, 1000, 100]
     },
@@ -38,12 +43,17 @@ const navs: navType[] = [
         m_user_type_id: [10000, 1000, 100]
     },
     {
-        path: '/',
+        path: '/userManagement',
+        element: <UserManagement/>,
+        m_user_type_id: [10000, 1000]
+    },
+    {
+        path: '/interviewerdashboard',
         element: <InterviewerDashboard />,
         m_user_type_id: [1]
     },
     {
-        path: '/',
+        path: '/datauploaderdashboard',
         element: <DataUploaderDashboard />,
         m_user_type_id: [10]
     },
@@ -119,19 +129,17 @@ navs.forEach((item)=>{
     }
 });
 
-
 export const Router = createBrowserRouter([
     {
         path: '*',
         element: <NotFound />
     },
     {
-        path: '/login',
+        path: '/',
         element: <Login />
     },
     {
-        path: '/',
         element:<LayoutContext><Layout/></LayoutContext>,
         children: [...navlinks]
-    },
+    }
 ]);

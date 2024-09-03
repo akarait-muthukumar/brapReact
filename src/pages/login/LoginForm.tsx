@@ -38,7 +38,7 @@ function LoginForm() {
          
             sessionStorage.setItem("details", btoa(JSON.stringify(res.data.details)));
             sessionStorage.setItem("token", res.data.token);
-            navigate('/', {replace:true});
+            navigate('/dashboard', {replace:true});
           });
         }
     }

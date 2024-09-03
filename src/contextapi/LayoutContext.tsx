@@ -1,5 +1,5 @@
 
-import {createContext, useContext, PropsWithChildren, useReducer} from 'react'
+import {createContext, useContext, PropsWithChildren, useReducer, useRef} from 'react'
 import type { stateType, ContextType} from '../types/Layout';
 import LayoutReducer from '../reducers/LayoutReducer';
 
@@ -11,9 +11,12 @@ const Context  = createContext({} as ContextType);
 
 export default function LayoutContext({children}:PropsWithChildren){
 
+
+   const mainRef = useRef<HTMLElement | null>(null);
+
    const [state, dispatch] = useReducer(LayoutReducer, initialState);
 
-   return <Context.Provider value={{state,dispatch}}>{children}</Context.Provider>
+   return <Context.Provider value={{state,dispatch, mainRef}}>{children}</Context.Provider>
 
 }
 

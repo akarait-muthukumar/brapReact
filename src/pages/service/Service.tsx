@@ -7,7 +7,7 @@ import { useService } from "../../contextapi/ServiceContext";
 function Service() {
   const theme = useMantineTheme();
 
-  const { state, dispatch } = useService();
+  const { state, dispatch , pageTitleBarRef} = useService();
 
   useEffect(() => {
     if (state.data == null) {
@@ -22,7 +22,7 @@ function Service() {
 
   return (
     <>
-      <Paper mb={8} py={4}>
+      <Paper mb={8} py={4} ref={pageTitleBarRef}>
         <Grid gutter={8} align='center' justify='space-between'>
           <Grid.Col span={'auto'} flex={1}><Text fw={500} size="sm">Service</Text></Grid.Col>
           <Grid.Col span={{ lg: 3, md: 4 }}>

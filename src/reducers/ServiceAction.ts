@@ -74,8 +74,9 @@ export default function ServiceAction(state:initialValueType, action:actionType)
         case 'search':{
            return _fnSearch(action.payload);
         }
-        case "renderData":
+        case "renderData":{
             return {...state, renderData:action.payload};
+        }
         default :
             return state;
     }
