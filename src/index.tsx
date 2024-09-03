@@ -4,6 +4,8 @@ import './assets/css/fontawesome.css';
 import './assets/css/style.css';
 import '@mantine/core/styles.css';
 
+import AuthContext from './contextapi/AuthContext';
+
 import {MantineProvider} from '@mantine/core';
 import {RouterProvider} from 'react-router-dom';
 import {Router} from './Router';
@@ -15,9 +17,11 @@ const root = ReactDOM.createRoot(
 );
 
 root.render(
-  <MantineProvider theme={ThemeModify}>
-      <RouterProvider router={Router} />
-  </MantineProvider>
+  <AuthContext>
+    <MantineProvider theme={ThemeModify}>
+        <RouterProvider router={Router} />
+    </MantineProvider>
+  </AuthContext>
 );
 
 

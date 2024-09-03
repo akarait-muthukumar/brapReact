@@ -2,9 +2,11 @@ import { Flex, Title,Box, UnstyledButton, Popover , Text, Avatar, NavLink} from 
 import { useNavigate, To} from "react-router-dom";
 import { useState } from "react";
 import {useLayout} from "../../contextapi/LayoutContext";
+import { useAuth } from "../../contextapi/AuthContext";
 
 function Titlebar() {
   const navigate = useNavigate();
+  const {auth} = useAuth();
 
   const {state, dispatch} = useLayout();
 
@@ -26,8 +28,8 @@ function Titlebar() {
             <UnstyledButton onClick={()=>setOpened(!isOpened)}>
                 <Flex align='center' gap={4}>
                   <Box>
-                    <Text lh='xs' ta='end' fw={500} size="sm">Admin User</Text>
-                    <Text ta='end' fw={500} size="xs" c='gray.6'>Super Admin</Text>
+                    <Text lh='xs' ta='end' fw={500} size="sm">{auth?.user_type}</Text>
+                    <Text ta='end' fw={500} size="xs" c='gray.6'>{auth?.username}</Text>
                   </Box>
                   <Avatar miw={32} w={32} h={32} variant="light"  bg='white' color="#0d6efd" radius="xl"><i className="fa-regular fa-user"></i></Avatar>
                 </Flex>

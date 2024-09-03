@@ -6,10 +6,11 @@ import type { navsType } from "../../types/Sidebar";
 import guidance_TN_gov  from "../../assets/images/guidance_TN_gov.png";
 
 import { useLayout } from "../../contextapi/LayoutContext";
-
+import { useAuth } from "../../contextapi/AuthContext";
 function SideBar() {
   const navigate = useNavigate();
-  
+  const {auth} = useAuth();
+
   const {state} = useLayout();
 
   const [active, setActive] = useState<Number>(1);
@@ -140,7 +141,7 @@ function SideBar() {
     }
   ];
 
-  let m_user_type_id = 1000;
+  let m_user_type_id = (auth !== null) ? Number(auth.m_user_type_id) : 1000;
 
   let navlinks:navsType[] = [];
 
