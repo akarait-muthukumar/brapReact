@@ -13,9 +13,10 @@ function Dashboard() {
 
   const [scrollHeight, setScrollHeight] = useState<number>(0)
   const topRef = useRef<HTMLDivElement>(null);
+  const tableHeaderRef = useRef<HTMLTableElement>(null);
 
   const handler = () => {
-    let height = window.innerHeight - (Number(topRef.current?.clientHeight) + 90);
+    let height = window.innerHeight - (Number(topRef.current?.clientHeight) +  Number(tableHeaderRef.current?.clientHeight) + 90);
     setScrollHeight(height)
   }
 
@@ -128,78 +129,79 @@ function Dashboard() {
             }
           </Grid.Col>
         </Grid>
-        <Table>
-          <Table.Thead bg={theme.primaryColor} c='white'>
-            <Table.Tr>
-              <Table.Th ta='center' w={60}>S.No</Table.Th>
-              <Table.Th >Department</Table.Th>
-              <Table.Th ta='center' w={225}>Performance</Table.Th>
-              <Table.Th ta='center' w={75}>Flag</Table.Th>
-              <Table.Th ta='center' w={120}>View</Table.Th>
-            </Table.Tr>
-          </Table.Thead>
-        </Table>
       </Box>
-      <ScrollArea h={scrollHeight} w='100%'>
-        <Table withColumnBorders withTableBorder>
-          <Table.Tbody>
-            {
-              data.department_list !== null &&
-              <>
-                {
-                  data?.department_list.map((item, index) => {
-                    return <Fragment key={item.department_id}>
-                      <Table.Tr>
-                        <Table.Td ta='center' w={60}>{index + 1}</Table.Td>
-                        <Table.Td >{item.department}</Table.Td>
-                        <Table.Td ta='center' w={225}><ProgressBar score={item.score} width={160} /></Table.Td>
-                        <Table.Td ta='center' w={75}>
-                          {
-                            Number(item.score) > 0 && <Box c={(Number(data.overall_rating) > Number(item.score)) ? 'red' : 'green'}><i className="fa-solid fa-flag"></i></Box>
-                          }
-                        </Table.Td>
-                        <Table.Td ta='center' w={120}>
-                          <Flex gap={8} align='center' justify='center'>
-                            {Number(item.is_group) === 1 && <UnstyledButton onClick={(event) => displayGroupItems(event, item.department_id)}><Text c='gray.7'><i className="fa-solid fa-large fa-square-g"></i></Text></UnstyledButton>}
-                            {Number(item.score) > 0 && <UnstyledButton onClick={()=>redirectViewPage(btoa(JSON.stringify(item)))}><Text size="sm" c={theme.primaryColor}><i className='fa-solid fa-eye text-indigo'></i></Text></UnstyledButton>}
-                          </Flex>
-                        </Table.Td>
-                      </Table.Tr>
-
-                      {
-                        item.is_group === "1" && <>
-                          {
-                            item?.group?.map((g_item, i) => {
-                              return <Fragment key={g_item.m_group_id}>
-                                <Table.Tr  bg='gray.1' className={`group-row group-row-${item.department_id}`}>
-                                  <Table.Td ta='end' w={60}>{(index + 1) + "." + (i+1)}</Table.Td>
-                                  <Table.Td >{g_item.group_name}</Table.Td>
-                                  <Table.Td ta='center' w={225}><ProgressBar score={g_item.score} width={160} bg="white" /></Table.Td>
-                                  <Table.Td ta='center' w={75}>
-                                    {
-                                      Number(g_item.score) > 0 && <Box c='green'><i className="fa-solid fa-flag"></i></Box>
-                                    }
-                                  </Table.Td>
-                                  <Table.Td ta='center' w={120}>
-                                    <Flex gap={8} align='center' justify='center'>
-                                      {Number(g_item.score) > 0 && <UnstyledButton onClick={()=>redirectViewPage(btoa(JSON.stringify({...item, ...g_item})))}><Text size="sm" c={theme.primaryColor}><i className='fa-solid fa-eye text-indigo'></i></Text></UnstyledButton>}
-                                    </Flex>
-                                  </Table.Td>
-                                </Table.Tr>
-                              </Fragment>
-                            })
-                          }
-                        </>
-                      }
-                    </Fragment>
-                  })
-                }
-              </>
-            }
-          </Table.Tbody>
+      <ScrollArea w='100%' scrollbars='x'>     
+        <Table ref={tableHeaderRef}>
+            <Table.Thead bg={theme.primaryColor} c='white'>
+              <Table.Tr>
+                <Table.Th ta='center' w={60}>S.No</Table.Th>
+                <Table.Th >Department</Table.Th>
+                <Table.Th ta='center' w={225}>Performance</Table.Th>
+                <Table.Th ta='center' w={75}>Flag</Table.Th>
+                <Table.Th ta='center' w={120}>View</Table.Th>
+              </Table.Tr>
+            </Table.Thead>
         </Table>
-      </ScrollArea>
+        <ScrollArea h={scrollHeight} w='100%'>
+          <Table withColumnBorders withTableBorder>
+            <Table.Tbody>
+              {
+                data.department_list !== null &&
+                <>
+                  {
+                    data?.department_list.map((item, index) => {
+                      return <Fragment key={item.department_id}>
+                        <Table.Tr>
+                          <Table.Td ta='center' w={60}>{index + 1}</Table.Td>
+                          <Table.Td >{item.department}</Table.Td>
+                          <Table.Td ta='center' w={225}><ProgressBar score={item.score} width={160} /></Table.Td>
+                          <Table.Td ta='center' w={75}>
+                            {
+                              Number(item.score) > 0 && <Box c={(Number(data.overall_rating) > Number(item.score)) ? 'red' : 'green'}><i className="fa-solid fa-flag"></i></Box>
+                            }
+                          </Table.Td>
+                          <Table.Td ta='center' w={120}>
+                            <Flex gap={8} align='center' justify='center'>
+                              {Number(item.is_group) === 1 && <UnstyledButton onClick={(event) => displayGroupItems(event, item.department_id)}><Text c='gray.7'><i className="fa-solid fa-large fa-square-g"></i></Text></UnstyledButton>}
+                              {Number(item.score) > 0 && <UnstyledButton onClick={()=>redirectViewPage(btoa(JSON.stringify(item)))}><Text size="sm" c={theme.primaryColor}><i className='fa-solid fa-eye text-indigo'></i></Text></UnstyledButton>}
+                            </Flex>
+                          </Table.Td>
+                        </Table.Tr>
 
+                        {
+                          item.is_group === "1" && <>
+                            {
+                              item?.group?.map((g_item, i) => {
+                                return <Fragment key={g_item.m_group_id}>
+                                  <Table.Tr  bg='gray.1' className={`group-row group-row-${item.department_id}`}>
+                                    <Table.Td ta='end' w={60}>{(index + 1) + "." + (i+1)}</Table.Td>
+                                    <Table.Td >{g_item.group_name}</Table.Td>
+                                    <Table.Td ta='center' w={225}><ProgressBar score={g_item.score} width={160} bg="white" /></Table.Td>
+                                    <Table.Td ta='center' w={75}>
+                                      {
+                                        Number(g_item.score) > 0 && <Box c='green'><i className="fa-solid fa-flag"></i></Box>
+                                      }
+                                    </Table.Td>
+                                    <Table.Td ta='center' w={120}>
+                                      <Flex gap={8} align='center' justify='center'>
+                                        {Number(g_item.score) > 0 && <UnstyledButton onClick={()=>redirectViewPage(btoa(JSON.stringify({...item, ...g_item})))}><Text size="sm" c={theme.primaryColor}><i className='fa-solid fa-eye text-indigo'></i></Text></UnstyledButton>}
+                                      </Flex>
+                                    </Table.Td>
+                                  </Table.Tr>
+                                </Fragment>
+                              })
+                            }
+                          </>
+                        }
+                      </Fragment>
+                    })
+                  }
+                </>
+              }
+            </Table.Tbody>
+          </Table>
+        </ScrollArea>
+      </ScrollArea>   
     </>
   )
 }

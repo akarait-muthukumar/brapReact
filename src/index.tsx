@@ -7,21 +7,22 @@ import '@mantine/core/styles.css';
 import AuthContext from './contextapi/AuthContext';
 
 import {MantineProvider} from '@mantine/core';
-import {RouterProvider} from 'react-router-dom';
-import {Router} from './Router';
+import {BrowserRouter} from 'react-router-dom';
 import {ThemeModify} from './ThemeCustomize';
-
+import Router from './Router';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 
 root.render(
-  <AuthContext>
-    <MantineProvider theme={ThemeModify}>
-        <RouterProvider router={Router} />
-    </MantineProvider>
-  </AuthContext>
+ <BrowserRouter>
+    <AuthContext>
+      <MantineProvider theme={ThemeModify}>
+          <Router/>
+      </MantineProvider>
+    </AuthContext>
+  </BrowserRouter>
 );
 
 

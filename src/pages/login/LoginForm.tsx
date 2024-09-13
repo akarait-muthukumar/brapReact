@@ -5,10 +5,11 @@ import { api } from '../../utils/ApiService';
 import { formType } from '../../types/Login';
 import { alert } from '../../utils/Alert';
 import { instance } from '../../utils/ApiService';
-
+import { useAuth } from '../../contextapi/AuthContext';
 function LoginForm() {
 
   const navigate = useNavigate();
+  const {setAuth} = useAuth();
 
   const theme = useMantineTheme();
 
@@ -35,10 +36,11 @@ function LoginForm() {
         else{
           alert.success(res.message).then(()=>{
             instance.defaults.headers['X-eodb-Authorization'] = res.data.token;
-         
+            setAuth(res.data.details);
             sessionStorage.setItem("details", btoa(JSON.stringify(res.data.details)));
             sessionStorage.setItem("token", res.data.token);
-            navigate('/dashboard', {replace:true});
+
+            navigate(`/${res.data.details.redirect_url}`, {replace:true});
           });
         }
     }

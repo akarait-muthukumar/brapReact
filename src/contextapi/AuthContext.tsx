@@ -10,7 +10,7 @@ export default  function AuthContext({children}:PropsWithChildren) {
     let x:AuthUserType = null;
 
     if(_token !== null){
-        x = JSON.parse(atob(_token.split('.')[1]))['data'];
+      x = JSON.parse(atob(_token.split('.')[1]))['data'];
     }
 
     const [auth, setAuth] = useState(x);

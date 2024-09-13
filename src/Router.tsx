@@ -1,5 +1,5 @@
 import{ lazy} from 'react';
-import { createBrowserRouter, RouteObject} from 'react-router-dom';
+import { Route, Routes} from 'react-router-dom';
 // context
 import LayoutContext from './contextapi/LayoutContext';
 import ReportContext from './contextapi/ReportContext';
@@ -7,6 +7,8 @@ import ServiceContext from './contextapi/ServiceContext';
 
 import Login from './pages/login/Login';
 import Layout from './pages/layout/Layout';
+
+import RequiredAuth from './utils/RequiredAuth';
 
 const NotFound = lazy(()=> import('./pages/NotFound'));
 const Company = lazy(()=> import('./pages/company/Company'));
@@ -29,117 +31,38 @@ const DashboardView = lazy(()=> import('./pages/dashboard/DashboardView'));
 const UserManagement = lazy(()=> import('./pages/userManagement/UserManagement'));
 
 
-type navType = RouteObject & { m_user_type_id: Number[] }
+export default function Router(){
 
-const navs: navType[] = [
-    {
-        path: '/dashboard',
-        element: <Dashboard />,
-        m_user_type_id: [10000, 1000, 100]
-    },
-    {
-        path: '/dashboardView',
-        element: <DashboardView/>,
-        m_user_type_id: [10000, 1000, 100]
-    },
-    {
-        path: '/userManagement',
-        element: <UserManagement/>,
-        m_user_type_id: [10000, 1000]
-    },
-    {
-        path: '/interviewerdashboard',
-        element: <InterviewerDashboard />,
-        m_user_type_id: [1]
-    },
-    {
-        path: '/datauploaderdashboard',
-        element: <DataUploaderDashboard />,
-        m_user_type_id: [10]
-    },
-    {
-        path: '/department',
-        element:<Department/>,
-        m_user_type_id: [10000, 1000]
-    },
-    {
-        path: '/reformnumber',
-        element:<ReformNumber/>,
-        m_user_type_id: [10000, 1000]
-    },
-    {
-        path: '/service',
-        element:<ServiceContext><Service/></ServiceContext>,
-        m_user_type_id: [10000, 1000]
-    },
-    {
-        path: '/surveyyear',
-        element:<SurveyYear/>,
-        m_user_type_id: [10000, 1000]
-    },
-    {
-        path: '/deptwisereformno',
-        element:<DeptWiseReformNo/>,
-        m_user_type_id: [10000, 1000]
-    },
-    {
-        path: '/survey',
-        element:<Survey/>,
-        m_user_type_id: [10000, 1000, 1]
-    },
-    {
-        path: '/misstatus',
-        element:<MisStatus/>,
-        m_user_type_id: [10000, 1000, 100]
-    },
-    {
-        path: '/report',
-        element:<ReportContext><Report/></ReportContext>,
-        m_user_type_id: [10000, 1000, 100]
-    },
-    {
-        path: '/dailycallreport',
-        element:<DailyCallReport/>,
-        m_user_type_id: [10000, 1000, 100]
-    },
-    {
-        path: '/userremarks',
-        element:<UserRemarks/>,
-        m_user_type_id: [100, 10, 1]
-    },
-    {
-        path: '/company',
-        element:<Company/>,
-        m_user_type_id: [10]
-    },
-    {
-        path: '/datauploaderreport',
-        element:<DataUploaderReport/>,
-        m_user_type_id: [10]
-    }
-];
+    return (
+        <Routes>
+            <Route path='*' element={<NotFound />} />
+            <Route path='/' element={<Login />} />
 
-const m_user_type_id = 1000;
+            <Route element={<LayoutContext><Layout/></LayoutContext>} >
+                <Route path='/dashboard' element={<RequiredAuth m_user_type_id={[10000,1000]}><Dashboard /></RequiredAuth>} />
+                <Route path='/dashboardView' element={<RequiredAuth m_user_type_id={[10000,1000]}><DashboardView /></RequiredAuth>} />
+                <Route path='/userManagement' element={<RequiredAuth m_user_type_id={[10000,1000]}><UserManagement /></RequiredAuth>} />
+                <Route path='/interviewerdashboard' element={<RequiredAuth m_user_type_id={[1]}><InterviewerDashboard /></RequiredAuth>} />
+                <Route path='/datauploaderdashboard' element={<RequiredAuth m_user_type_id={[10]}><DataUploaderDashboard /></RequiredAuth>} />
+                <Route path='/department' element={<RequiredAuth m_user_type_id={[10000,1000]}><Department /></RequiredAuth>} />
+                <Route path='/reformnumber' element={<RequiredAuth m_user_type_id={[10000,1000]}><ReformNumber /></RequiredAuth>} />
+                <Route path='/service' element={<RequiredAuth m_user_type_id={[10000,1000]}><ServiceContext><Service/></ServiceContext></RequiredAuth>} />
+                <Route path='/surveyyear' element={<RequiredAuth m_user_type_id={[10000,1000]}><SurveyYear /></RequiredAuth>} />
+                <Route path='/deptwisereformno' element={<RequiredAuth m_user_type_id={[10000,1000]}><DeptWiseReformNo/></RequiredAuth>} />
+                <Route path='/survey' element={<RequiredAuth m_user_type_id={[10000,1000,1]}><Survey/></RequiredAuth>} />
+                <Route path='/misstatus' element={<RequiredAuth m_user_type_id={[10000,1000,100]}><MisStatus/></RequiredAuth>} />
+                <Route path='/report' element={<RequiredAuth m_user_type_id={[10000,1000,100]}><ReportContext><Report/></ReportContext></RequiredAuth>} />
+                <Route path='/dailycallreport' element={<RequiredAuth m_user_type_id={[10000,1000,100]}><DailyCallReport/></RequiredAuth>} />
+                <Route path='/userremarks' element={<RequiredAuth m_user_type_id={[100,10,1]}><UserRemarks/></RequiredAuth>} />
+                <Route path='/company' element={<RequiredAuth m_user_type_id={[10]}><Company/></RequiredAuth>} />
+                <Route path='/datauploaderreport' element={<RequiredAuth m_user_type_id={[10]}><DataUploaderReport/></RequiredAuth>} />
+            </Route>
 
-let navlinks:RouteObject[] = [];
+        </Routes>
+    );
+}
 
-navs.forEach((item)=>{
-    if(item.m_user_type_id.includes(m_user_type_id)){
-      navlinks.push({path:item.path, element:item.element});
-    }
-});
 
-export const Router = createBrowserRouter([
-    {
-        path: '*',
-        element: <NotFound />
-    },
-    {
-        path: '/',
-        element: <Login />
-    },
-    {
-        element:<LayoutContext><Layout/></LayoutContext>,
-        children: [...navlinks]
-    }
-]);
+
+
+

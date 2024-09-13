@@ -26,7 +26,7 @@ class DBConfig {
         $this->host = "localhost";
         $this->db_username ="root";
         $this->db_password = "";
-        $this->db_name = "eodb_new";
+        $this->db_name = "brap_react";
         try {
             $driver = 'mysqli';
             $dsn_options = '?persist=0&fetchmode=2';

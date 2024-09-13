@@ -1,6 +1,8 @@
 import axios from "axios";
 import { alert } from "./Alert";
 
+import logout from "./logout";
+
 export const instance = axios.create({
     baseURL: 'http://192.168.0.116/brapre/api/ajax.php',
     headers: {
@@ -8,6 +10,7 @@ export const instance = axios.create({
         "X-eodb-Authorization":sessionStorage.getItem("token") == null ? "" : sessionStorage.getItem("token")
     }
 });
+
 
 class ApiService{
 
@@ -28,7 +31,7 @@ class ApiService{
                     if(res.isConfirmed){
                         sessionStorage.clear();
                         instance.defaults.headers['X-eodb-Authorization'] = null;
-                        window.location.replace(`${window.location.origin}/login`);
+                        logout().redirectToLogin();
                     }
                 });
             }

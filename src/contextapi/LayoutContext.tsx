@@ -11,7 +11,6 @@ const Context  = createContext({} as ContextType);
 
 export default function LayoutContext({children}:PropsWithChildren){
 
-
    const mainRef = useRef<HTMLElement | null>(null);
 
    const [state, dispatch] = useReducer(LayoutReducer, initialState);

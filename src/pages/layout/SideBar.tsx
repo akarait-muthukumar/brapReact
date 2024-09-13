@@ -9,6 +9,7 @@ import { useLayout } from "../../contextapi/LayoutContext";
 import { useAuth } from "../../contextapi/AuthContext";
 function SideBar() {
   const navigate = useNavigate();
+  
   const {auth} = useAuth();
 
   const {state} = useLayout();
