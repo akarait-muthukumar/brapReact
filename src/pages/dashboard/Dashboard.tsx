@@ -49,7 +49,7 @@ function Dashboard() {
 
     const fetchData = async () => {
       await api.fetch({ 'type': 'getCompletedSurveyCount', ...filter }).then((res) => {
-        obj = { ...obj, completed_survey: res?.data['count'] };
+        obj = { ...obj, completed_survey: res?.data?.['count'] };
       });
       await api.fetch({ 'type': 'getDepartmentCount', ...filter }).then((res) => {
         obj = { ...obj, no_of_department: res?.data['count'] };
