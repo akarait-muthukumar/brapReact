@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import type { fieldErrorType, filterType } from "../../types/Report";
 import dayjs from "dayjs";
 import '@mantine/dates/styles.css';
+import CustomSelect from "../../components/CustomSelect";
 function ReportFilter() {
 
   const { state, dispatch } = useReport();
@@ -138,13 +139,19 @@ function ReportFilter() {
       {
         state.filter.year !== null && department !== undefined &&
         <Grid.Col span={6}>
-          <Select
+          {/* <Select
             label="Department"
             value={state.filter.department_id}
             data={department}
             onChange={(_value) => {dispatch({ type: 'department_id', payload: _value }); dispatch({ type: 'reform', payload: [] }); setFieldError({...fieldError, department_id:false, reform:false})}}
             error={fieldError.department_id}
-          />
+          /> */}
+          <CustomSelect label="Department"
+            value={state.filter.department_id}
+            data={department}
+            onChange={(_value) => {dispatch({ type: 'department_id', payload: _value }); dispatch({ type: 'reform', payload: [] }); setFieldError({...fieldError, department_id:false, reform:false})}}
+            error={fieldError.department_id}/>
+
         </Grid.Col>
       }
       {

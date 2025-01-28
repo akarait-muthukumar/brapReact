@@ -11,8 +11,6 @@ function RequiredAuth({m_user_type_id, children}:RequiredAuthType) {
 
     const {auth} = useAuth();
 
-    console.log(auth);
-
     const _token = sessionStorage.getItem('token');
 
     if(auth != null){

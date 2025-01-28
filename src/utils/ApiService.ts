@@ -4,7 +4,7 @@ import { alert } from "./Alert";
 import logout from "./logout";
 
 export const instance = axios.create({
-    baseURL: 'http://192.168.0.118/brapre/api/ajax.php',
+    baseURL: 'http://192.168.0.136/brapre/api/ajax.php',
     headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
         "X-eodb-Authorization":sessionStorage.getItem("token") == null ? "" : sessionStorage.getItem("token")
